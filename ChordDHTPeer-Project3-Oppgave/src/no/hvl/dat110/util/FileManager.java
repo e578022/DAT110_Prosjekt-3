@@ -73,28 +73,34 @@ public class FileManager {
     /**
      * 
      * @param bytesOfFile
-     * @throws RemoteException 
+     * @throws RemoteException
      */
     public int distributeReplicastoPeers() throws RemoteException {
     	int counter = 0;
-    	
+
     	// Task1: Given a filename, make replicas and distribute them to all active peers such that: pred < replica <= peer
     	
     	// Task2: assign a replica as the primary for this file. Hint, see the slide (project 3) on Canvas
-    	
+		Random rnd= new Random();
+		int index= rnd.nextInt(Util.numReplicas-1);
     	// create replicas of the filename
-    	
+    	createReplicaFiles();
 		// iterate over the replicas
-    	
-    	// for each replica, find its successor by performing findSuccessor(replica)
-    	
-    	// call the addKey on the successor and add the replica
-    	
-    	// call the saveFileContent() on the successor
-    	
-    	// increment counter
-    	
-    		
+		for (counter=0; counter < replicafiles.length; counter++) {
+			// for each replica, find its successor by performing findSuccessor(replica)
+			BigInteger fileID = (BigInteger) replicafiles[counter];
+			NodeInterface succOfFileID = chordnode.findSuccessor(fileID);
+			if (succOfFileID != null) {
+				// call the addKey on the successor and add the replica
+				succOfFileID.addKey(fileID);
+				// call the saveFileContent() on the successor
+
+				if (counter == index)
+					succOfFileID.saveFileContent(filename, fileID, bytesOfFile, true); // save the file in the memory of the peer
+				else succOfFileID.saveFileContent(filename, fileID, bytesOfFile, false);
+				// increment counter
+			}
+		}
 		return counter;
     }
 	
@@ -237,7 +243,7 @@ public class FileManager {
 		return sizeOfByte;
 	}
 	/**
-	 * @param size the size to set
+	 * @param sizeOfByte the size to set
 	 */
 	public void setSizeOfByte(String sizeOfByte) {
 		this.sizeOfByte = sizeOfByte;
