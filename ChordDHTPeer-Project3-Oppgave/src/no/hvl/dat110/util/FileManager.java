@@ -115,19 +115,22 @@ public class FileManager {
 		this.filename = filename;
 		Set<Message> succinfo = new HashSet<Message>();
 		// Task: Given a filename, find all the peers that hold a copy of this file
-		
+
 		// generate the N replicas from the filename by calling createReplicaFiles()
-		
+
+		createReplicaFiles();
 		// it means, iterate over the replicas of the file
-		
-		// for each replica, do findSuccessor(replica) that returns successor s.
-		
-		// get the metadata (Message) of the replica from the successor, s (i.e. active peer) of the file
-		
-		// save the metadata in the set succinfo.
-		
-		this.activeNodesforFile = succinfo;
-		
+		for (BigInteger replicaFile : replicafiles) {
+			// for each replica, do findSuccessor(replica) that returns successor s.
+			NodeInterface succOfFileID = chordnode.findSuccessor(replicaFile);
+			// get the metadata (Message) of the replica from the successor, s (i.e. active peer) of the file
+			if (succOfFileID != null) {
+				Message s = succOfFileID.getFilesMetadata().get(replicaFile);
+				// save the metadata in the set succinfo.
+				succinfo.add(s);
+				this.activeNodesforFile = succinfo;
+			}
+		}
 		return succinfo;
 	}
 	
