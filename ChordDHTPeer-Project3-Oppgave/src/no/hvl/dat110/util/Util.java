@@ -51,7 +51,7 @@ public class Util {
 				id = id.add(modulo);
 			}
 			
-			upper = upper.add(modulo);
+			upper = upper.add(modulo); 
 		}
 		
 		if((lower.compareTo(id) <= 0) && id.compareTo(upper) <= 0) {

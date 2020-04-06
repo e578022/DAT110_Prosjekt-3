@@ -48,7 +48,7 @@ public class ChordLookup {
 			
 		}else {
 			NodeInterface highest_pred = findHighestPredecessor(key);
-			return highest_pred.findSuccessor(key);
+			return highest_pred.findSuccessor(key); 
 		}
 									
 	}
