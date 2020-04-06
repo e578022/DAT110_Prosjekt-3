@@ -56,7 +56,7 @@ public class Hash {
 		
 		// return the address size
 		
-		return size;
+		 return size;
 	}
 	
 	public static int bitSize() {
