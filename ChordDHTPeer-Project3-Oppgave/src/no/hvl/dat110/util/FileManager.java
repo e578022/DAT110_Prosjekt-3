@@ -97,7 +97,7 @@ public class FileManager {
 
 				if (counter == index)
 					succOfFileID.saveFileContent(filename, fileID, bytesOfFile, true); // save the file in the memory of the peer
-				else succOfFileID.saveFileContent(filename, fileID, bytesOfFile, false);
+				//else succOfFileID.saveFileContent(filename, fileID, bytesOfFile, false);
 				// increment counter
 			}
 		}
@@ -148,7 +148,7 @@ public class FileManager {
 			// use the primaryServer boolean variable contained in the Message class to check if it is the primary or not
 			if (activePeer.isPrimaryServer()) {
 				// return the primary
-				primary = Util.getProcessStub(activePeer.getNameOfFile(),activePeer.getPort());
+				primary = Util.getProcessStub(activePeer.getNodeIP(),activePeer.getPort());
 
 			}
 		}
